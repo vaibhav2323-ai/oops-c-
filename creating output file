@@ -1,0 +1,33 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    // Create file streams for output and input
+    ofstream outFile("input.txt");
+    ifstream inFile("input.txt");
+
+    // Write to the file
+    string name;
+    int emp_id;
+    float salary;
+
+    cout << "Enter name: ";
+    cin >> name;
+    cout << "Enter employee ID: ";
+    cin >> emp_id;
+    cout << "Enter salary: ";
+    cin >> salary;
+
+    outFile << name << endl << emp_id << endl << salary << endl;
+    outFile.close();
+
+    // Read from the file
+    inFile >> name >> emp_id >> salary;
+    cout << "Employee Info: " << endl;
+    cout << "Name: " << name << ", ID: " << emp_id << ", Salary: " << salary << endl;
+
+    inFile.close();
+
+    return 0;
+}
