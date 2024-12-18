@@ -1,0 +1,73 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Student {
+    string name, dob, bloodGroup, contactAddress, phoneNumber, drivingLicense;
+    int rollNo;
+    char division;
+    static int studentCount;
+
+public:
+    // Default constructor
+    Student() : rollNo(0), division('A') { ++studentCount; }
+
+    // Parameterized constructor
+    Student(string n, int r, string dob, string bg, string addr, string phone, string dl, char d)
+        : name(n), rollNo(r), dob(dob), bloodGroup(bg), contactAddress(addr), phoneNumber(phone), drivingLicense(dl), division(d) { ++studentCount; }
+
+    // Destructor
+    ~Student() { --studentCount; }
+
+    // Display student details
+    void display() const {
+        cout << name << " | " << rollNo << " | " << division << " | " << dob << " | " << bloodGroup << " | "
+             << contactAddress << " | " << phoneNumber << " | " << drivingLicense << endl;
+    }
+
+    // Static function to get student count
+    static int getStudentCount() { return studentCount; }
+};
+
+int Student::studentCount = 0; // Initialize static variable
+
+// Database class to manage student records
+class StudentDatabase {
+    Student* students;
+    int size;
+
+public:
+    // Constructor
+    StudentDatabase(int s) : size(s) { students = new Student[size]; }
+
+    // Destructor
+    ~StudentDatabase() { delete[] students; }
+
+    // Add a student
+    void addStudent(int index, string n, int r, string dob, string bg, string addr, string phone, string dl, char d) {
+        students[index] = Student(n, r, dob, bg, addr, phone, dl, d);
+    }
+
+    // Display all students
+    void displayDatabase() const {
+        for (int i = 0; i < size; ++i) students[i].display();
+    }
+};
+
+int main() {
+    // Create database with 2 students
+    StudentDatabase db(2);
+
+    // Adding students
+    db.addStudent(0, "John Doe", 101, "01/01/2000", "O+", "Pune", "1234567890", "DL001", 'A');
+    db.addStudent(1, "Jane Smith", 102, "02/02/2001", "A+", "Mumbai", "0987654321", "DL002", 'B');
+
+    // Display all student records
+    db.displayDatabase();
+
+    // Display total number of students
+    cout << "Total Students: " << Student::getStudentCount() << endl;
+
+    return 0;
+}
+
