@@ -1,0 +1,42 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+struct Record {
+    string name, dob, phone;
+    Record(string n, string d, string p) : name(n), dob(d), phone(p) {}
+};
+
+bool compare(const Record &a, const Record &b) {
+    return a.name < b.name;  // Sort by name
+}
+
+int main() {
+    vector<Record> records;
+    records.push_back(Record("Alice", "1990-01-01", "1234567890"));
+    records.push_back(Record("Bob", "1985-02-15", "9876543210"));
+    records.push_back(Record("Charlie", "1992-03-10", "5556667777"));
+
+    // Sort records by name
+    sort(records.begin(), records.end(), compare);
+
+    // Display sorted records
+    cout << "Sorted records by name:\n";
+    for (const auto& r : records)
+        cout << r.name << ", " << r.dob << ", " << r.phone << endl;
+
+    // Search for a record by name
+    string searchName = "Bob";
+    auto it = find_if(records.begin(), records.end(), [&searchName](const Record& r) {
+        return r.name == searchName;
+    });
+
+    if (it != records.end()) {
+        cout << "\nRecord found: " << it->name << ", " << it->dob << ", " << it->phone << endl;
+    } else {
+        cout << "\nRecord not found.\n";
+    }
+
+    return 0;
+}
